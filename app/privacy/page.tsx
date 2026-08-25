@@ -1,0 +1,3 @@
+import type { Metadata } from "next"; import { Header } from "@/components/Header";
+export const metadata: Metadata = { title: "隐私说明 | 图快", description: "了解图快如何在浏览器本地处理你的图片。" };
+export default function Privacy(){return <><Header/><main className="page-shell max-w-3xl py-16"><p className="text-sm text-zinc-500">图快隐私说明</p><h1 className="mt-2 text-3xl font-semibold tracking-tight">你的图片只属于你</h1><div className="mt-8 space-y-6 leading-7 text-zinc-600"><p>图快第一版在你的浏览器本地处理图片。选择、压缩、调整尺寸、转换格式和 ZIP 打包均在你的设备完成，默认不会把图片文件上传到我们的服务器。</p><p>我们不会要求你注册账号，也不会建立图片库或保留你的文件。关闭页面后，本次会话中的图片数据将从页面内存中释放。</p><p>请注意：浏览器扩展、你的设备或网络环境可能有各自的隐私政策；在处理敏感图片前，请使用你信任的设备与浏览器。</p></div></main></>}
