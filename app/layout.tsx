@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   openGraph: { type: "website", siteName: "Pictogo", title: "Pictogo | Batch image tools", description: "Batch-compress, resize, and convert images locally in your browser.", url: "/" },
   twitter: { card: "summary", title: "Pictogo | Batch image tools", description: "Batch-compress, resize, and convert images locally in your browser." },
   icons: { icon: "/favicon.svg" },
+  verification: { google: "vkMj49fiTjTnSHor3lp_SES5BnapsSeI2VZHCzuguWc" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
