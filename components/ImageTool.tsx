@@ -31,14 +31,14 @@ function sourceOutputMime(file: File): OutputMime { return file.type === "image/
 async function loadImage(url: string) { return await new Promise<HTMLImageElement>((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = () => reject(new Error("decode")); image.src = url; }); }
 async function canvasBlob(canvas: HTMLCanvasElement, mime: OutputMime, quality: number) { const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob(value => value ? resolve(value) : reject(new Error("encode")), mime, mime === "image/png" ? undefined : quality)); if (blob.type !== mime) throw new Error(`mime:${mime}`); return blob; }
 
-export function ImageTool({ initial = "compress" }: { initial?: Tool }) {
+export function ImageTool({ initial = "compress", defaultOutputMime = "image/webp", defaultResizeRatio, defaultCompressionMode = "balanced" }: { initial?: Tool; defaultOutputMime?: OutputMime; defaultResizeRatio?: number; defaultCompressionMode?: Preset }) {
   const { t } = useLocale();
   const input = useRef<HTMLInputElement>(null);
   const [items, setItems] = useState<Item[]>(() => typeof window === "undefined" ? [] : window.__pictogoImageDraft || []);
-  const [tool, setTool] = useState<Tool>(initial); const [preset, setPreset] = useState<Preset>("balanced"); const [advanced, setAdvanced] = useState(false);
-  const [quality, setQuality] = useState(80); const [outputMime, setOutputMime] = useState<OutputMime>("image/webp"); const [keepSize, setKeepSize] = useState(false); const [keepTransparency, setKeepTransparency] = useState(true);
-  const [maxWidth, setMaxWidth] = useState<string>(""); const [maxHeight, setMaxHeight] = useState<string>(""); const [ratio, setRatio] = useState<number | null>(null); const [customRatioW, setCustomRatioW] = useState("1"); const [customRatioH, setCustomRatioH] = useState("1");
-  const [cropMode, setCropMode] = useState<CropMode>("fit"); const [batchCrop, setBatchCrop] = useState<BatchCrop>("unified"); const [unifiedCrop, setUnifiedCrop] = useState<CropPosition>({ x: .5, y: .5 });
+  const [tool, setTool] = useState<Tool>(initial); const [preset, setPreset] = useState<Preset>(defaultCompressionMode); const [advanced, setAdvanced] = useState(false);
+  const [quality, setQuality] = useState(80); const [outputMime, setOutputMime] = useState<OutputMime>(defaultOutputMime); const [keepSize, setKeepSize] = useState(false); const [keepTransparency, setKeepTransparency] = useState(true);
+  const [maxWidth, setMaxWidth] = useState<string>(""); const [maxHeight, setMaxHeight] = useState<string>(""); const [ratio, setRatio] = useState<number | null>(defaultResizeRatio ?? null); const [customRatioW, setCustomRatioW] = useState("1"); const [customRatioH, setCustomRatioH] = useState("1");
+  const [cropMode, setCropMode] = useState<CropMode>(defaultResizeRatio ? "crop" : "fit"); const [batchCrop, setBatchCrop] = useState<BatchCrop>("unified"); const [unifiedCrop, setUnifiedCrop] = useState<CropPosition>({ x: .5, y: .5 });
   const [processing, setProcessing] = useState(false); const [progress, setProgress] = useState(0); const [done, setDone] = useState(false); const [dragging, setDragging] = useState(false); const [previewIndex, setPreviewIndex] = useState<number | null>(null); const [cropIndex, setCropIndex] = useState<number | null>(null);
   const updateItems = (change: Item[] | ((current: Item[]) => Item[])) => setItems(current => { const next = typeof change === "function" ? change(current) : change; if (typeof window !== "undefined") window.__pictogoImageDraft = next; return next; });
   const totalBefore = useMemo(() => items.reduce((sum, item) => sum + item.file.size, 0), [items]); const totalAfter = useMemo(() => items.reduce((sum, item) => sum + (item.result?.blob.size || 0), 0), [items]);

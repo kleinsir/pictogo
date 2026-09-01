@@ -3,7 +3,7 @@
 import { MessageKey } from "./messages";
 import { useLocale } from "./locale";
 
-export type FaqSection = "home" | "compress" | "resize" | "convert";
+export type FaqSection = "home" | "compress" | "resize" | "convert" | "jpgToWebp" | "pngToJpg" | "webpToJpg" | "compressTo1mb" | "compressTo500kb" | "cropSquare" | "resize16x9" | "batchCompressor";
 
 export function Faq({ section }: { section: FaqSection }) {
   const { t } = useLocale();

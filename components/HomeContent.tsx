@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ImageTool } from "./ImageTool";
 import { useLocale } from "./locale";
 import { Faq } from "./Faq";
+import { RelatedTools } from "./RelatedTools";
 
 export function HomeContent() {
   const { t } = useLocale();
@@ -20,7 +21,7 @@ export function HomeContent() {
     <section id="more" className="border-y border-zinc-100 bg-zinc-50 py-16"><div className="page-shell">
       <p className="text-sm text-zinc-500">{t("home.more")}</p><h2 className="mt-2 text-2xl font-semibold tracking-tight">{t("home.moreTitle")}</h2>
       <div className="mt-7 grid gap-3 sm:grid-cols-3"><Card href="/compress" title={t("nav.compress")} text={t("preset.balanced.size")}/><Card href="/resize" title={t("nav.resize")} text={t("resize.fitDesc")}/><Card href="/convert" title={t("nav.convert")} text={t("page.convertDesc")}/></div>
-    </div></section><Faq section="home"/>
+    </div></section><RelatedTools group="popular"/><Faq section="home"/>
   </main>;
 }
 function Feature({icon,title,text}:{icon:string,title:string,text:string}) { return <div><span className="text-xl">{icon}</span><h3 className="mt-3 font-semibold">{title}</h3><p className="mt-1 text-sm text-zinc-500">{text}</p></div>; }
