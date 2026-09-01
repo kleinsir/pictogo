@@ -14,5 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}<Analytics /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Pictogo", applicationCategory: "MultimediaApplication", operatingSystem: "Web", description: "Batch-compress, resize, and convert images locally in your browser.", url: "https://pictogo.vercel.app", featureList: ["Local browser image processing", "Batch image compression", "Image resizing and fixed-ratio crops", "JPG, PNG, and WebP conversion", "ZIP downloads"] }) }} /></body></html>;
+  return <html lang="en"><body><div className="site-frame">{children}</div><Analytics /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Pictogo", applicationCategory: "MultimediaApplication", operatingSystem: "Web", description: "Batch-compress, resize, and convert images locally in your browser.", url: "https://pictogo.vercel.app", featureList: ["Local browser image processing", "Batch image compression", "Image resizing and fixed-ratio crops", "JPG, PNG, and WebP conversion", "ZIP downloads"] }) }} /></body></html>;
 }
