@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { headers } from "next/headers";
+import { LocaleProvider } from "@/components/locale";
+import { normalizeLocale } from "@/components/locale-config";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,5 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><div className="site-frame">{children}</div><Analytics /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Pictogo", applicationCategory: "MultimediaApplication", operatingSystem: "Web", description: "Batch-compress, resize, and convert images locally in your browser.", url: "https://pictogo.vercel.app", featureList: ["Local browser image processing", "Batch image compression", "Image resizing and fixed-ratio crops", "JPG, PNG, and WebP conversion", "ZIP downloads"] }) }} /></body></html>;
+  const locale = normalizeLocale(headers().get("x-pictogo-locale"));
+  const lang = locale === "zh" ? "zh-CN" : locale === "pt" ? "pt-BR" : locale;
+  return <html lang={lang}><body><LocaleProvider initialLocale={locale}><div className="site-frame">{children}</div></LocaleProvider><Analytics /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Pictogo", applicationCategory: "MultimediaApplication", operatingSystem: "Web", description: "Batch-compress, resize, and convert images locally in your browser.", url: "https://pictogo.vercel.app", featureList: ["Local browser image processing", "Batch image compression", "Image resizing and fixed-ratio crops", "JPG, PNG, and WebP conversion", "ZIP downloads"] }) }} /></body></html>;
 }
