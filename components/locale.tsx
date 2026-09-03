@@ -20,6 +20,7 @@ export function LocaleProvider({ initialLocale, children }: { initialLocale: Loc
       const selected = normalizeLocale(next);
       document.cookie = `pictogo_lang=${selected}; Path=/; Max-Age=31536000; SameSite=Lax`;
       document.cookie = "pictogo_lang_source=manual; Path=/; Max-Age=31536000; SameSite=Lax";
+      document.documentElement.lang = htmlLanguage(selected);
       setLocaleState(selected);
     },
     t(key, values = {}) {
